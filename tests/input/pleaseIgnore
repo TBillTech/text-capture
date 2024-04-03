@@ -1,0 +1,6 @@
+/**
+ * This file should be ignored since it has no extension.
+ */
+#this file should be ignored since it has no extension
+// Explanation of a Two Line Element (TLE):
+// A Two Line Element (TLE) is a standard format used to describe the orbit of an object in space, such as a satellite. It consists of two lines of data that provide information about the object's position, velocity, and other orbital parameters. The first line contains information about the object's identification, epoch time, and orbital elements. The second line contains additional orbital elements and checksums. TLEs are widely used in satellite tracking and prediction systems.

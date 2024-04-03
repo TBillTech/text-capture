@@ -1,0 +1,217 @@
+# Path: tests/test_output.py
+#This script will recreate the directory structure and files captured by text_capture.py
+
+import os
+import argparse
+
+def main():
+    # Define the arg parser
+    parser = argparse.ArgumentParser(description='Recreate directory structure and files captured by text_capture.py')
+    parser.add_argument('output_dir', help='The directory to unpack the captured files', default='.')
+    args = parser.parse_args()
+
+    # Get the output directory
+    output_dir = args.output_dir
+
+    # Create the directory structure
+    create_directory_structure(output_dir)
+
+def create_directory_structure(directory):
+    # Create directory: 
+    os.makedirs(os.path.join(directory, ''), exist_ok=True)
+
+    # Create file: Jenkinsfile
+    with open(os.path.join(directory, 'Jenkinsfile'), 'w') as f:
+        f.write('pipeline {\n')
+        f.write('    agent any\n')
+        f.write('\n')
+        f.write('    stages {\n')
+        f.write('        stage(\'Checkout\') {\n')
+        f.write('            steps {\n')
+        f.write('                checkout scm\n')
+        f.write('            }\n')
+        f.write('        }\n')
+        f.write('\n')
+        f.write('        stage(\'Build\') {\n')
+        f.write('            steps {\n')
+        f.write('                sh \'apt-get update\'\n')
+        f.write('                sh \'apt-get install -y build-essential\'\n')
+        f.write('                sh \'make\'\n')
+        f.write('            }\n')
+        f.write('        }\n')
+        f.write('\n')
+        f.write('        stage(\'Package\') {\n')
+        f.write('            steps {\n')
+        f.write('                sh \'make package\'\n')
+        f.write('            }\n')
+        f.write('        }\n')
+        f.write('\n')
+        f.write('        stage(\'Publish\') {\n')
+        f.write('            steps {\n')
+        f.write('                // Add your publish steps here\n')
+        f.write('            }\n')
+        f.write('        }\n')
+        f.write('    }\n')
+        f.write('}')
+
+    # Create file: Dockerfile
+    with open(os.path.join(directory, 'Dockerfile'), 'w') as f:
+        f.write('FROM debian:latest\n')
+
+    # Create file: ipso5.py
+    with open(os.path.join(directory, 'ipso5.py'), 'w') as f:
+        f.write('#This is a random python script that does nothing useful, it just exhibits lots of various python\n')
+        f.write('# features, especially strings, docstrings, and comments.  It is used to test the text_capture.py.\n')
+        f.write('\n')
+        f.write('# Path: tests/output.py\n')
+        f.write('#This script will recreate the directory structure and files captured by text_capture.py\n')
+        f.write('\n')
+        f.write('import os\n')
+        f.write('import argparse\n')
+        f.write('import re\n')
+        f.write('\n')
+        f.write('# Do some nothing grinding with string literals\n')
+        f.write('def nothing_grinder(more_text):\n')
+        f.write('    # Define the arg parser\n')
+        f.write('    parser = argparse.ArgumentParser(description=\'Grind up some text about a random topic\')\n')
+        f.write('    parser.add_argument(\'topic\', help=\'A topic to grind\', default=\'pandas\')\n')
+        f.write('    args = parser.parse_args()\n')
+        f.write('\n')
+        f.write('    # Get the topic\n')
+        f.write('    topic = args.topic\n')
+        f.write('\n')
+        f.write('    # Define some text about animals, complete with escape characters, parenthesis, latin names, and other special characters.\n')
+        f.write('    text = \'\'\'Animals are multicellular, "eukaryotic" organisms in the \\n\\tbiological kingdom Animalia. With \'few\' exceptions, \'\'\'\\\n')
+        f.write('        \'\'\'animals consume organic material, breathe oxygen, are able to move, reproduce sexually, and grow from a hollow sphere of cells, \'\'\'\\\n')
+        f.write('        \'\'\'the blastula, during embryonic development. Over 1.5 million living animal species have been described—of which\'\'\'\\\n')
+        f.write('        \'\'\' around 1 million are insects—but it has been estimated there are over 7 million animal species in total. Animals\'\'\'\\\n')
+        f.write('        \'\'\' range in length from 8.5 millionths of a meter to 33.6 meters (110 ft) and have complex interactions with each\'\'\'\\\n')
+        f.write('        \'\'\' other and their environments, forming intricate food webs. The category includes humans, but in colloquial use\'\'\'\\\n')
+        f.write('        \'\'\' the term animal often refers only to non-human animals. The study of non-human animals is known as zoology.\'\'\'\n')
+        f.write('    text = text + more_text\n')
+        f.write('\n')
+        f.write('    # do a regexp replacement of the word \'animal\' with the topic\n')
+        f.write('    text = re.sub(\'animal\', topic, text)\n')
+        f.write('\n')
+        f.write('    # create an escaped text copy:\n')
+        f.write('    escaped_text = text.replace(\'\\\\\', \'\\\\\\\\\').replace(\'\\\'\', \'\\\\\\\'\')\n')
+        f.write('    return escaped_text\n')
+        f.write('\n')
+        f.write('# Do some nothing grinding with string literals\n')
+        f.write('if __name__ == \'__main__\':\n')
+        f.write('    # Define the arg parser\n')
+        f.write('    parser = argparse.ArgumentParser(description=\'Recreate directory structure and files captured by text_capture.py\')\n')
+        f.write('    parser.add_argument(\'output_dir\', help=\'The directory to unpack the captured files\', default=\'.\')\n')
+        f.write('    args = parser.parse_args()\n')
+        f.write('\n')
+        f.write('    # Get the output directory\n')
+        f.write('    output_dir = args.output_dir\n')
+        f.write('\n')
+        f.write('    # Create the directory structure\n')
+        f.write('    create_directory_structure(output_dir)\n')
+        f.write('\n')
+        f.write('    a_string = f\'\'\'Try this \'f-string\'\'\\\' with a "variable": {output_dir}\\n\\n\\t\'\'\'\n')
+        f.write('    ')
+
+    # Create directory: more
+    os.makedirs(os.path.join(directory, 'more'), exist_ok=True)
+
+    # Create directory: more/more
+    os.makedirs(os.path.join(directory, 'more/more'), exist_ok=True)
+
+    # Create directory: more/more/more
+    os.makedirs(os.path.join(directory, 'more/more/more'), exist_ok=True)
+
+    # Create file: more/more/more/class.css
+    with open(os.path.join(directory, 'more/more/more/class.css'), 'w') as f:
+        f.write('/* This is a unused css file.  Let\'s say it defines a classification banner! */\n')
+        f.write('.classification-banner {\n')
+        f.write('  background-color: #f00;\n')
+        f.write('  color: #fff;\n')
+        f.write('  padding: 10px;\n')
+        f.write('  text-align: center;\n')
+        f.write('}\n')
+        f.write('.classification-banner h1 {\n')
+        f.write('  font-size: 24px;\n')
+        f.write('  margin: 0;\n')
+        f.write('}\n')
+        f.write('.classification-banner p {\n')
+        f.write('  font-size: 16px;\n')
+        f.write('  margin: 0;\n')
+        f.write('}\n')
+        f.write('.classification-banner.classification-banner--top-secret {\n')
+        f.write('  background-color: #000;\n')
+        f.write('}')
+
+    # Create file: more/more/more/deep.py
+    with open(os.path.join(directory, 'more/more/more/deep.py'), 'w') as f:
+        f.write('import os\n')
+        f.write('import argparse\n')
+        f.write('\n')
+        f.write('def write_escaped(f, text):\n')
+        f.write('    escaped_text = text.replace(\'\\\\\', \'\\\\\\\\\').replace(\'\\\'\', \'\\\\\\\'\')\n')
+        f.write('    f.write(\'        write_escaped(f, \\\'{}\\\')\\n\'.format(escaped_text))\n')
+        f.write('\n')
+        f.write('def create_directory_structure(directory):\n')
+        f.write('    print(f"But I refuse! your {directory} on principle!")\n')
+        f.write('\n')
+        f.write('if __name__ == \'__main__\':\n')
+        f.write('    # Define the arg parser\n')
+        f.write('    parser = argparse.ArgumentParser(description=\'Recreate directory structure and files captured by text_capture.py\')\n')
+        f.write('    parser.add_argument(\'output_dir\', help=\'The directory to unpack the captured files\', default=\'.\')\n')
+        f.write('    args = parser.parse_args()\n')
+        f.write('\n')
+        f.write('    # Get the output directory\n')
+        f.write('    output_dir = args.output_dir\n')
+        f.write('\n')
+        f.write('    # Create the directory structure\n')
+        f.write('    create_directory_structure(output_dir)\n')
+        f.write('\n')
+        f.write('    a_string = f\'\'\'Try this \'f-string\'\'\\\' with a "variable": {output_dir}\\n\\n\\t\'\'\'\n')
+        f.write('    \n')
+        f.write('    # Create the deep directory\n')
+        f.write('    deep_dir = os.path.join(output_dir, \'deep\')\n')
+        f.write('    create_directory_structure(deep_dir)\n')
+        f.write('\n')
+        f.write('    # Create the more directory\n')
+        f.write('    more_dir = os.path.join(deep_dir, \'more\')\n')
+        f.write('    create_directory_structure(more_dir)\n')
+        f.write('\n')
+        f.write('    # Create the more directory\n')
+        f.write('    more_dir = os.path.join(more_dir, \'more\')\n')
+        f.write('    create_directory_structure(more_dir)\n')
+        f.write('\n')
+        f.write('    # Create the more directory\n')
+        f.write('    more_dir = os.path.join(more_dir, \'more\')\n')
+        f.write('    create_directory_structure(more_dir)\n')
+        f.write('\n')
+        f.write('    # Create the deep.py file\n')
+        f.write('    deep_file = os.path.join(more_dir, \'deep.py\')\n')
+        f.write('    with open(deep_file, \'w\') as f:\n')
+        f.write('        f.write(\'\\n\')\n')
+        f.write('        f.write(\'    # Create file: {}\\n\'.format(deep_file))\n')
+        f.write('        f.write(\'    with open(os.path.join(directory, \\\'{}\\\'), \\\'w\\\') as f:\\n\'.format(deep_file))\n')
+        f.write('        f.write(\'        write_escaped(f, \\\'# Path: tests/more/more/more/deep.py\\n\\\')\\n\')\n')
+        f.write('        f.write(\'        write_escaped(f, \\\'# Compare this snippet from tests/ipso5.py:\\n\\\')\\n\')\n')
+        f.write('        f.write(\'        write_escaped(f, \\\'# #This is a random python script that does nothing useful, it just exhibits lots of various python\\n\\\')\\n\')\n')
+        f.write('        f.write(\'        write_escaped(f, \\\'# # features, especially strings, docstrings, and comments.  It is used to test the text_capture.py.\\n\\\')\\n\')\n')
+        f.write('        f.write(\'        write_escaped(f, \\\'# \\n\\\')\\n\')\n')
+        f.write('        f.write(\'        write_escaped(f, \\\'# # Path: tests/output.py\\n\\\')\\n\')\n')
+        f.write('        f.write(\'        write_escaped(f, \\\'# #This script will recreate the directory structure and files captured by text_capture.py\\n\\\')\\n\')')
+
+    # Create file: more/more/more/planets.csv
+    with open(os.path.join(directory, 'more/more/more/planets.csv'), 'w') as f:
+        f.write('Planet Name, Planet Mass, Planet Description, Date first discovered\n')
+        f.write('Mercury, 0.055, hot, 2000 BC\n')
+        f.write('Venus, 0.815, cloudy, 2000 BC\n')
+        f.write('Earth, 1.0, just right, 2000 BC\n')
+        f.write('Mars, 0.107, cold, 2000 BC\n')
+        f.write('Jupiter, 318, stormy, "2000 BC"\n')
+        f.write('Saturn, 95, ringed, 2000 BC\n')
+        f.write('Uranus, 14, windy, 1781\n')
+        f.write('Neptune, 17, cold, 1846\n')
+        f.write('Pluto, 0.002, cold, 1930\n')
+        f.write('Ceres, 0.00015, cold, 1801\n')
+
+if __name__ == '__main__':
+    main()

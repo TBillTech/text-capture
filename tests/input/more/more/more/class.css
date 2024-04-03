@@ -1,0 +1,18 @@
+/* This is a unused css file.  Let's say it defines a classification banner! */
+.classification-banner {
+  background-color: #f00;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+.classification-banner h1 {
+  font-size: 24px;
+  margin: 0;
+}
+.classification-banner p {
+  font-size: 16px;
+  margin: 0;
+}
+.classification-banner.classification-banner--top-secret {
+  background-color: #000;
+}

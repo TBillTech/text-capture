@@ -1,0 +1,8 @@
+ignore:.*\.parquet
+ignore:.*\.bin
+ignore:.*\.gz
+ignore:.*\.tar
+ignore:.*\.tgz
+ignore:.*\.rgx
+keep:.*Dockerfile
+keep:.*Jenkinsfile
