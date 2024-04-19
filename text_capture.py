@@ -121,10 +121,6 @@ def capture_text(directory, output, rules):
         # Walk the directory
         for root, dirs, files in os.walk(directory):
             rel_path = get_rel_path(directory, root)
-            # Write the create directory structure, prepending the root with the output directory
-            f.write('    # Create directory: {}\n'.format(rel_path))
-            f.write('    os.makedirs(os.path.join(directory, \'{}\'), exist_ok=True)\n'.format(rel_path))
-            f.write('\n')
 
             # Write the create files
             for file in files:
@@ -136,6 +132,10 @@ def capture_text(directory, output, rules):
                 if ignore_file(file_path, rules):
                     continue
 
+                # Write the create directory structure, prepending the root with the output directory
+                f.write('    # Create directory: {}\n'.format(rel_path))
+                f.write('    os.makedirs(os.path.join(directory, \'{}\'), exist_ok=True)\n'.format(rel_path))
+                f.write('\n')
                 # Write the create file, taking care to use the output directory
                 f.write('    # Create file: {}\n'.format(rel_file_path))
                 f.write('    with open(os.path.join(directory, \'{}\'), \'w\') as f:\n'.format(rel_file_path))
@@ -144,6 +144,7 @@ def capture_text(directory, output, rules):
                 # Since each line can contain arbitrary text characters, we need to escape the line before capturing it
                 # to the output script, but then un-escape it when the script is run
                 with open(file_path, 'r') as file:
+                    empty = True
                     for line in file:
                         # Remove the newline
                         text = line.rstrip('\n')
@@ -153,6 +154,9 @@ def capture_text(directory, output, rules):
                             f.write('        f.write(\'{}\\n\')\n'.format(escaped_line))
                         else:
                             f.write('        f.write(\'{}\')\n'.format(escaped_line))
+                        empty = False
+                    if empty:
+                        f.write('        pass')
 
                 f.write('\n')
 

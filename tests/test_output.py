@@ -20,6 +20,10 @@ def create_directory_structure(directory):
     # Create directory: 
     os.makedirs(os.path.join(directory, ''), exist_ok=True)
 
+    # Create file: Dockerfile
+    with open(os.path.join(directory, 'Dockerfile'), 'w') as f:
+        f.write('FROM debian:latest\n')
+
     # Create file: Jenkinsfile
     with open(os.path.join(directory, 'Jenkinsfile'), 'w') as f:
         f.write('pipeline {\n')
@@ -53,10 +57,6 @@ def create_directory_structure(directory):
         f.write('        }\n')
         f.write('    }\n')
         f.write('}')
-
-    # Create file: Dockerfile
-    with open(os.path.join(directory, 'Dockerfile'), 'w') as f:
-        f.write('FROM debian:latest\n')
 
     # Create file: ipso5.py
     with open(os.path.join(directory, 'ipso5.py'), 'w') as f:
